@@ -16,8 +16,7 @@ const rest = (object) => {
   return object;
 };
 
-// Assignment is unclear on this function, assignment says add weapon object to end of inventory array. However, what is meant is add the item to be picked up (argument of function) to the end of the array.
-
+// Assignment is unclear on this function, assignment says add weapon object to end of inventory array. I initially interpreted this as the hero's weapon. However, what is meant is add the item to be picked up (argument of function) to the end of the array. Further on, this does turn out to be a weapon, but it does not have to be.
 const pickUpItem = (hero, itemToPickUp) => {
   hero.inventory.push(itemToPickUp);
 };

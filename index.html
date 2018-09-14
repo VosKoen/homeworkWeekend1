@@ -2,15 +2,16 @@
 <head>
     <meta charset="utf-8">
     <title>Mocha Tests</title>
+    <link href="styles/style.css" rel="stylesheet" type="text/css">
     <link href="https://unpkg.com/mocha@4.0.1/mocha.css" rel="stylesheet" />
 </head>
 <body>
 
 
   <!-- YOUR HTML HERE -->
-  <img id='inn' onclick='rest(hero)'>
-  <img id='dagger' onclick='pickUpItem(hero, dagger)'>
-  <img id='bag' onclick='equipWeapon(hero)'>
+  <img id='inn' class='interactive-image' src="images/inn.jpeg" alt="Restore your health in this inn!" onclick='rest(hero)'>
+  <img id='dagger' class='interactive-image'  src="images/dagger.jpg" alt="A dagger... Be careful, this is a dangerous item." onclick='pickUpItem(hero, dagger)'>
+  <img id='bag' class='interactive-image'  src="images/bag.jpg" alt="Your bag! Click on it to equip your hero with a new weapon."  onclick='equipWeapon(hero)'>
 
 
 
