@@ -196,12 +196,12 @@ const updatePlayingField = (hero, arrayOfEnemies, inn, item, key) => {
     moveEnemy(arrayOfEnemies);
 
     //Is there an inn?
-    if(hero.location === inn.location) {
+    if(hero.location[0] === inn.location[0] && hero.location[1] === inn.location[1]) {
       rest(hero);
     }
 
     //Is there an item?
-    if((hero.location === item.location) && (item.isOnMap)) {
+    if((hero.location[0] === item.location[0] && hero.location[1] === item.location[1]) && (item.isOnMap)) {
 
       pickUpItem(hero,item);
       //Afraid to break tests, I would place the following line in pickUpItem, however, I do not want to break the automated tests.
@@ -211,7 +211,7 @@ const updatePlayingField = (hero, arrayOfEnemies, inn, item, key) => {
 
     //Is there an enemy?
     for(let i=0;i<arrayOfEnemies.length;i++) {
-      if((hero.location === arrayOfEnemies[i].location) && (arrayOfEnemies[i].isAlive)) {
+      if((hero.location[0] === arrayOfEnemies[i].location[0] && hero.location[1] === arrayOfEnemies[i].location[1]) && (arrayOfEnemies[i].isAlive)) {
         //We fight!
         hero.health -= arrayOfEnemies[i].weapon.damage;
         arrayOfEnemies[i].health -= hero.weapon.damage;
@@ -234,13 +234,22 @@ const updatePlayingField = (hero, arrayOfEnemies, inn, item, key) => {
 
 
     //Write new status to the DOM
-    drawPlayElement(hero);
+
     drawPlayElement(inn);
-    drawPlayElement(item);
+    if(item.isOnMap) {
+      drawPlayElement(item);
+    }
+    drawPlayElement(hero);
 
     for(let i=0;i<arrayOfEnemies.length;i++) {
-      drawPlayElement(arrayOfEnemies[i]);
+      if(arrayOfEnemies[i].isAlive) {
+        drawPlayElement(arrayOfEnemies[i]);
+      }
     }
+
+    displayStats(hero);
+    console.log(hero.health);
+    console.log(hero.weapon);
   }
 };
 
@@ -255,13 +264,15 @@ const updatePlayingField = (hero, arrayOfEnemies, inn, item, key) => {
 
 
 //Initial draw
-drawPlayElement(heroGame);
 drawPlayElement(innGame);
 drawPlayElement(daggerGame);
+drawPlayElement(heroGame);
 
 for(let i=0;i<allEnemies.length;i++) {
   drawPlayElement(allEnemies[i]);
 }
+
+displayStats(heroGame);
 
 // Initially game is not playing
 let gameIsPlaying = false;
