@@ -13,12 +13,17 @@ const hero = {
 
 const rest = (object) => {
   object.health = 10;
+
+  displayStats(hero);
+  
   return object;
 };
 
 // Assignment is unclear on this function, assignment says add weapon object to end of inventory array. I initially interpreted this as the hero's weapon. However, what is meant is add the item to be picked up (argument of function) to the end of the array. Further on, this does turn out to be a weapon, but it does not have to be.
 const pickUpItem = (someHero, itemToPickUp) => {
   someHero.inventory.push(itemToPickUp);
+
+  displayStats(hero);
 };
 
 const equipWeapon = (someHero) => {
@@ -27,6 +32,8 @@ const equipWeapon = (someHero) => {
   if (someHero.inventory.length !== 0 && someHero.inventory[0] !== {}) {
     someHero.weapon = someHero.inventory[0];
   }
+
+  displayStats(hero);
 };
 
 //Weapon to be picked up by hero
