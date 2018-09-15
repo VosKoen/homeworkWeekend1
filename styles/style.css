@@ -22,3 +22,7 @@ table, th, td {
   width: 100px;
   height: 100px;
 }
+
+#play-button {
+  font-size: 2em;
+}

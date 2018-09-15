@@ -9,6 +9,24 @@
 
 
   <!-- YOUR HTML HERE -->
+
+
+  <img id='inn' class='interactive-image' src="images/inn.jpeg" alt="Restore your health in this inn!" onclick='rest(hero)'>
+  <img id='dagger' class='interactive-image'  src="images/dagger.jpg" alt="A dagger... Be careful, this is a dangerous item." onclick='pickUpItem(hero, dagger)'>
+  <img id='bag' class='interactive-image'  src="images/bag.jpg" alt="Your bag! Click on it to equip your hero with a new weapon."  onclick='equipWeapon(hero)'>
+
+  <h3>IMPORTANT - Click 'Start playing' to start playing! Move using ARROW keys</h3>
+  <p>
+    The game can then also be stopped any time by clicking 'stop playing'
+  </p>
+  <p>
+    Below this text I created a game as my version of the bonus assignment.
+    I am using a new hero object. When playing, the table will be overwritten with the hero object of the game below.
+    The game is turnbased. Use the arrow keys to move.
+  </p>
+  <p>
+    Remember, in the inn you can restore your health! You will need it as it will take more than 1 fight to kill an enemy.
+  </p>
   <div id='hero-stats'>
     <table>
       <tr>
@@ -29,25 +47,12 @@
       </tr>
     </table>
   </div>
+  <form onsubmit="setNewNameHero(heroGame); return false">
+    <p>Fill in a new name for the hero (object belonging to game): <input type='text' id='input-new-name-hero'> <input type="submit" value="Submit"></p>
 
-  <img id='inn' class='interactive-image' src="images/inn.jpeg" alt="Restore your health in this inn!" onclick='rest(hero)'>
-  <img id='dagger' class='interactive-image'  src="images/dagger.jpg" alt="A dagger... Be careful, this is a dangerous item." onclick='pickUpItem(hero, dagger)'>
-  <img id='bag' class='interactive-image'  src="images/bag.jpg" alt="Your bag! Click on it to equip your hero with a new weapon."  onclick='equipWeapon(hero)'>
-
-  <p>
-    Below this text I created a game as my version of the bonus assignment.
-    I am using a new hero object. When playing, the table above will be overwritten with the hero object of the game below.
-    The game is turnbased. Use the arrow keys to move.
-  </p>
-  <p>
-    Remember, in the inn you can restore your health! You will need it as it will take more than 1 fight to kill an enemy.
-  </p>
-  <form>
   </form>
   <!-- Button to start or pause the game -->
-  <div id='play-button'>
-    Start playing
-  </div>
+    <button id='play-button' onclick='clickPlay()'>Start playing</button>
 
   <div id='playing-field'>
       <div class='playing-field-cell' id='cell-0-0'>

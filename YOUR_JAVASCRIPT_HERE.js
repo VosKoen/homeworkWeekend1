@@ -108,12 +108,17 @@ const daggerGame = {
   location: [3,1],
   isOnMap: true,
   imgSource: "images/dagger.jpg"
-}
+};
 
 const innGame = {
   location: [8,6],
   imgSource: "images/inn.jpeg"
-}
+};
+
+const fightLocation = {
+  location: [],
+  imgSource:'images/swords.png'
+};
 
 // I only have the enemies in objects above for readability. When the page loads I load all enemies in a set of enemies (an array) which is what I will use during the game.
 const allEnemies = [];
@@ -251,6 +256,12 @@ const updatePlayingField = (hero, arrayOfEnemies, inn, item, key) => {
     for(let i=0;i<arrayOfEnemies.length;i++) {
       if(arrayOfEnemies[i].isAlive) {
         drawPlayElement(arrayOfEnemies[i]);
+
+        //If hero is on location of enemy, we draw a battle symbol.
+        if(arrayOfEnemies[i].location[0] === hero.location[0] && arrayOfEnemies[i].location[1] === hero.location[1]) {
+          fightLocation.location = hero.location;
+          drawPlayElement(fightLocation);
+        }
       }
     }
 
@@ -267,6 +278,30 @@ const updatePlayingField = (hero, arrayOfEnemies, inn, item, key) => {
   divToAddImage.innerHTML = "<img src="+ object.imgSource +">";
 };
 
+//Function which starts or stops the game when clicking the button
+const clickPlay = () => {
+
+  const playButton = document.getElementById('play-button');
+
+  if(gameIsPlaying) {
+    gameIsPlaying = false;
+    playButton.innerHTML = 'Start playing';
+  } else {
+    gameIsPlaying = true;
+    playButton.innerHTML = 'Stop playing';
+  }
+};
+
+//Function to process new name from form
+const setNewNameHero = (hero) => {
+  const inputField = document.getElementById("input-new-name-hero");
+  hero.name = inputField.value;
+  displayStats(hero);
+};
+
+//-----------------
+//-----------------
+//Below we setup the game and call the updatePlayingfield when arrowkeys are pressed.
 
 //Initial draw
 drawPlayElement(innGame);
@@ -283,7 +318,7 @@ displayStats(heroGame);
 let gameIsPlaying = false;
 
 //Must remove following line after I finished the start button.
-gameIsPlaying = true;
+
 
 //Add listener to check for arrow key input
 document.addEventListener('keydown', (event) => {
