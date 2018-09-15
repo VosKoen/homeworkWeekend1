@@ -71,11 +71,12 @@ const heroGame = {
   inventory: [],
   health: 10,
   weapon: {
-    type: 'Bare fists',
+    type: 'bare fists',
     damage: 1
   },
   location: [4,4],
-  imgSource: "images/hero.jpeg"
+  imgSource: "images/hero.jpeg",
+  isAlive: true
 };
 
 //Enemy object:
@@ -189,7 +190,7 @@ const moveHero = (heroToMove, key) => {
 //Function to update the playing field. Will be called after every press of an arrow key.
 const updatePlayingField = (hero, arrayOfEnemies, inn, item, key) => {
   //Only update the playing field if the game is ongoing, if not, do nothing
-  if(gameIsPlaying) {
+  if((gameIsPlaying)&&(hero.isAlive)) {
 
     //First we move hero and allEnemies
     moveHero(hero, key);
@@ -219,6 +220,10 @@ const updatePlayingField = (hero, arrayOfEnemies, inn, item, key) => {
       if(arrayOfEnemies[i].health <= 0) {
         arrayOfEnemies[i].isAlive = false
       }
+      if(hero.health <= 0) {
+        hero.isAlive = false;
+        window.alert('You died!');
+      }
     }
 
 
@@ -239,7 +244,9 @@ const updatePlayingField = (hero, arrayOfEnemies, inn, item, key) => {
     if(item.isOnMap) {
       drawPlayElement(item);
     }
+    if(hero.isAlive) {
     drawPlayElement(hero);
+    }
 
     for(let i=0;i<arrayOfEnemies.length;i++) {
       if(arrayOfEnemies[i].isAlive) {
@@ -248,8 +255,6 @@ const updatePlayingField = (hero, arrayOfEnemies, inn, item, key) => {
     }
 
     displayStats(hero);
-    console.log(hero.health);
-    console.log(hero.weapon);
   }
 };
 
