@@ -14,8 +14,9 @@ const hero = {
 const rest = (object) => {
   object.health = 10;
 
-  displayStats(hero);
-  
+  // Stats on screen are updated
+  displayStats(object);
+
   return object;
 };
 
@@ -23,7 +24,8 @@ const rest = (object) => {
 const pickUpItem = (someHero, itemToPickUp) => {
   someHero.inventory.push(itemToPickUp);
 
-  displayStats(hero);
+  // Stats on screen are updated
+  displayStats(someHero);
 };
 
 const equipWeapon = (someHero) => {
@@ -33,7 +35,8 @@ const equipWeapon = (someHero) => {
     someHero.weapon = someHero.inventory[0];
   }
 
-  displayStats(hero);
+ // Stats on screen are updated
+  displayStats(someHero);
 };
 
 //Weapon to be picked up by hero
