@@ -15,7 +15,7 @@ const rest = (object) => {
   object.health = 10;
 
   // Stats on screen are updated
-  displayStats(object);
+  //displayStats(object);
 
   return object;
 };
@@ -25,7 +25,7 @@ const pickUpItem = (someHero, itemToPickUp) => {
   someHero.inventory.push(itemToPickUp);
 
   // Stats on screen are updated
-  displayStats(someHero);
+  //displayStats(someHero);
 };
 
 const equipWeapon = (someHero) => {
@@ -36,7 +36,7 @@ const equipWeapon = (someHero) => {
   }
 
  // Stats on screen are updated
-  displayStats(someHero);
+  //displayStats(someHero);
 };
 
 //Weapon to be picked up by hero
@@ -65,7 +65,7 @@ displayStats(hero);
 //For my own game:
 //The new hero object. I also added a location on the grid:
 
-const heroGame = {
+const gameHero = {
   name: 'Voske',
   heroic: true,
   inventory: [],
@@ -145,8 +145,6 @@ const moveEnemy = (arrayOfEnemiesToMove) => {
        break;
      }
    }
-   console.log(`Enemy 1 is located at ${arrayOfEnemiesToMove[0].location}`);
-   console.log(`Enemy 2 is located at ${arrayOfEnemiesToMove[1].location}`);
 };
 
 //Function which processes the player move:
@@ -155,17 +153,15 @@ const moveHero = (heroToMove) => {
 };
 
 //Function to update the playing field. Will be called after every press of an arrow key.
-const updatePlayingField = () => {
+const updatePlayingField = (heroToMove, arrayOfEnemiesToMove) => {
+  //Only update the playing field if the game is ongoing, if not, do nothing
+  if(gameIsPlaying) {
 
+    //First we move hero and allEnemies
+    moveHero(heroToMove);
+    moveEnemy(arrayOfEnemiesToMove);
+
+
+
+  }
 };
-
-moveEnemy(allEnemies);
-moveEnemy(allEnemies);
-moveEnemy(allEnemies);
-moveEnemy(allEnemies);
-moveEnemy(allEnemies);
-moveEnemy(allEnemies);
-moveEnemy(allEnemies);
-moveEnemy(allEnemies);
-moveEnemy(allEnemies);
-moveEnemy(allEnemies);
