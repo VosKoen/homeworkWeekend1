@@ -166,8 +166,24 @@ const moveEnemy = (arrayOfEnemiesToMove) => {
 };
 
 //Function which processes the player move:
-const moveHero = (heroToMove) => {
-
+const moveHero = (heroToMove, key) => {
+  if(key === 'ArrowUp') {
+    if(heroToMove.location[0] !==0) {
+      heroToMove.location[0] -= 1;
+    }
+  } else if(key === 'ArrowDown') {
+    if(heroToMove.location[0] !== 8) {
+      heroToMove.location[0] += 1;
+    }
+  } else if(key === 'ArrowLeft') {
+    if(heroToMove.location[1] !== 0) {
+      heroToMove.location[1] -= 1;
+    }
+  } else if(key === 'ArrowRight') {
+    if(heroToMove.location[1] !== 8) {
+      heroToMove.location[1] += 1;
+    }
+  }
 };
 
 //Function to update the playing field. Will be called after every press of an arrow key.
@@ -176,7 +192,7 @@ const updatePlayingField = (hero, arrayOfEnemies, inn, item, key) => {
   if(gameIsPlaying) {
 
     //First we move hero and allEnemies
-    moveHero(hero);
+    moveHero(hero, key);
     moveEnemy(arrayOfEnemies);
 
     //Is there an inn?
@@ -250,13 +266,16 @@ for(let i=0;i<allEnemies.length;i++) {
 // Initially game is not playing
 let gameIsPlaying = false;
 
+//Must remove following line after I finished the start button.
 gameIsPlaying = true;
 
 //Add listener to check for arrow key input
 document.addEventListener('keydown', (event) => {
   const keyName = event.key;
   //If the pressed key is an arrow key, process the turn.
-  if(keyName === ('ArrowLeft' || 'ArrowRight' || 'ArrowUp' || 'ArrowDown')) {
+
+  if((keyName === 'ArrowLeft') || (keyName === 'ArrowRight') || (keyName === 'ArrowUp') || (keyName === 'ArrowDown')) {
+
     updatePlayingField(heroGame, allEnemies, innGame, daggerGame, keyName);
   }
 });
