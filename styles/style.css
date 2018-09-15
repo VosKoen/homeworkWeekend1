@@ -16,5 +16,9 @@ table, th, td {
 
 #playing-field div {
   border: 1px solid black;
+}
 
+.playing-field-cell img {
+  width: 100px;
+  height: 100px;
 }

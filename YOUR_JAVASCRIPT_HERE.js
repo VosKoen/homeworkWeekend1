@@ -65,7 +65,7 @@ displayStats(hero);
 //For my own game:
 //The new hero object. I also added a location on the grid:
 
-const gameHero = {
+const heroGame = {
   name: 'Voske',
   heroic: true,
   inventory: [],
@@ -74,7 +74,8 @@ const gameHero = {
     type: 'Bare fists',
     damage: 1
   },
-  location: [4,4]
+  location: [4,4],
+  imgSource: "images/hero.jpeg"
 };
 
 //Enemy object:
@@ -84,7 +85,9 @@ const enemyGame1 = {
     type: 'Paws',
     damage: 1
   },
-  location: [0,0]
+  location: [0,0],
+  isAlive: true,
+  imgSource: "images/enemy1.jpg"
 };
 
 const enemyGame2 = {
@@ -93,8 +96,23 @@ const enemyGame2 = {
     type: 'Sword of Legends',
     damage: 4
   },
-  location: [8,8]
+  location: [8,8],
+  isAlive: true,
+  imgSource: "images/enemy2.png"
 };
+
+const daggerGame = {
+  type: 'dagger',
+  damage: 2,
+  location: [3,1],
+  isOnMap: true,
+  imgSource: "images/dagger.jpg"
+}
+
+const innGame = {
+  location: [8,6],
+  imgSource: "images/inn.jpeg"
+}
 
 // I only have the enemies in objects above for readability. When the page loads I load all enemies in a set of enemies (an array) which is what I will use during the game.
 const allEnemies = [];
@@ -153,15 +171,74 @@ const moveHero = (heroToMove) => {
 };
 
 //Function to update the playing field. Will be called after every press of an arrow key.
-const updatePlayingField = (heroToMove, arrayOfEnemiesToMove) => {
+const updatePlayingField = (hero, arrayOfEnemies, inn, item) => {
   //Only update the playing field if the game is ongoing, if not, do nothing
   if(gameIsPlaying) {
 
     //First we move hero and allEnemies
-    moveHero(heroToMove);
+    moveHero(hero);
     moveEnemy(arrayOfEnemiesToMove);
 
+    //Is there an inn?
+    if(hero.location === inn.location) {
+      rest(hero);
+    }
+
+    //Is there an item?
+    if((hero.location === item.location) && (item.isOnMap)) {
+
+      pickUpItem(hero,item);
+      //Afraid to break tests, I would place the following line in pickUpItem, however, I do not want to break the automated tests.
+      item.isOnMap = false;
+      equipWeapon(hero);
+    }
+
+    //Is there an enemy?
+    for(let i=0;i<arrayOfEnemies.length;i++) {
+      if((hero.location === arrayOfEnemies[i].location) && (arrayOfEnemies[i].isAlive)) {
+        //We fight!
+        hero.health -= arrayOfEnemies[i].weapon.damage;
+        arrayOfEnemies[i].health -= hero.weapon.damage;
+      }
+      if(arrayOfEnemies[i].health <= 0) {
+        arrayOfEnemies[i].isAlive = false
+      }
+    }
 
 
+    //Are we still alive?
+
+    //Empty all innerHTML of all elements in playing field.
+    const playingField = document.getElementsByClass('playing-field-cell');
+    playingField.innerHTML = '';
+
+
+    //Write new status to the DOM
+    drawPlayElement(hero);
+    drawPlayElement(inn);
+    drawPlayElement(item);
+
+    for(let i=0;i<arrayOfEnemies.length;i++) {
+      drawPlayElement(arrayOfEnemies[i]);
+    }
   }
 };
+
+//Function to draw any object with property location and a property containing an image source on the screen.
+  const drawPlayElement = (object) => {
+  const xLocation = object.location[0];
+  const yLocation = object.location[1];
+
+  const divToAddImage = document.getElementById('cell-' + xLocation + '-' + yLocation);
+  divToAddImage.innerHTML = "<img src="+ object.imgSource +">";
+};
+
+
+//Initial draw
+drawPlayElement(heroGame);
+drawPlayElement(innGame);
+drawPlayElement(daggerGame);
+
+for(let i=0;i<allEnemies.length;i++) {
+  drawPlayElement(allEnemies[i]);
+}
